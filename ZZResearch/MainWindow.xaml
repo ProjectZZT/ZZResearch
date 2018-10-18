@@ -1,0 +1,32 @@
+﻿<Window x:Class="ZZResearch.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZZResearch"
+        mc:Ignorable="d"
+        Title="수의 진실을 밝혀라" Height="350" Width="525">
+    <Grid>
+        <Menu>
+            <MenuItem Header="프로그램">
+                <MenuItem Header="계산기" Click="Calculator_Click"/>
+            </MenuItem>
+            <MenuItem Header="입력">
+                <MenuItem Header="Mother Number 입력" Click="InsertMN_Click"/>
+            </MenuItem>
+            <MenuItem Header="검색">
+                <MenuItem Header="Mother Number 검색" Click="SearchMN_Click"/>
+                <MenuItem Header="Child Number 검색" Click="SearchCN_Click"/>
+                <MenuItem Header="Power Number 검색" Click="SearchPN_Click"/>
+                <MenuItem Header="Fraction Number 검색" Click="SearchFN_Click"/>
+                <MenuItem Header="Prime Number 검색" Click="SearchPRN_Click"/>
+            </MenuItem>
+            <MenuItem Header="창">
+            </MenuItem>
+            <MenuItem Header="종료">
+            </MenuItem>
+
+        </Menu>
+        
+    </Grid>
+</Window>
