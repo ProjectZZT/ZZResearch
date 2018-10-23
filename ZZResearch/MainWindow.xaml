@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZZResearch"
         mc:Ignorable="d"
-        Title="수의 진실을 밝혀라" Height="350" Width="525">
+        Title="수의 진실을 밝혀라" Height="350" Width="525" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     <Grid>
         <Menu>
             <MenuItem Header="프로그램">
@@ -23,7 +23,7 @@
             </MenuItem>
             <MenuItem Header="창">
             </MenuItem>
-            <MenuItem Header="종료">
+            <MenuItem Header="종료" Click="Exit_Click">
             </MenuItem>
 
         </Menu>

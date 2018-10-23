@@ -5,65 +5,62 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZZResearch"
         mc:Ignorable="d"
-        Title="CNSearchWindow" Height="750" Width="808.451"
-        Loaded = "Window_Loaded">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="800"/>
-        </Grid.ColumnDefinitions>
-        <TextBox Name="searchText" HorizontalAlignment="Left" Height="30" Margin="50,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" FontSize="16" KeyDown="SearchText_OnKeyDown"/>
-        <Button Content="검색" HorizontalAlignment="Left" Height="30" Margin="375,50,0,0" VerticalAlignment="Top" Width="100" Click="Search_Click" />
-        <Button Content="지우기" HorizontalAlignment="Left" Height="30" Margin="500,50,0,0" VerticalAlignment="Top" Width="100" Click="Delete_Click"/>
-        <RadioButton GroupName="column" Name="cn_sign" Content="Sign" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,30,0,0" IsChecked="True"/>
-        <TabControl HorizontalAlignment="Left" Width="700" Height="430" Margin="50,100,0,0" VerticalAlignment="Top" >
-            <TabItem Header="Equal Number">
-                <Grid Background="#FFFFFFFF">
-                    <DataGrid HorizontalAlignment="Left" Height="402" VerticalAlignment="Top" Width="694" x:Name="dg_cn_equal" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dg_SelectionChanged">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Child Number" Binding="{Binding CNumber}"/>
-                            <DataGridTextColumn Header="EXP" Binding="{Binding cn_exp}"/>
-                            <DataGridTextColumn Header="Logic Desc" Binding="{Binding child_logic_desc}"/>
-                            <DataGridTextColumn Header="Address" Binding="{Binding child_m_addr_a}"/>
-                            <DataGridTextColumn Header="CN Create Date" Binding="{Binding child_create_date}"/>
-                            <DataGridTextColumn Header="Mother Number" Binding="{Binding MNumber}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Total Breifing">
-                <Grid Background="#FFFFFFFF">
-                </Grid>
-            </TabItem>
-            <TabItem Header="Small Numbers">
-                <Grid Background="#FFFFFFFF">
-                    <DataGrid HorizontalAlignment="Left" Height="402" VerticalAlignment="Top" Width="694" x:Name="dg_cn_small" AutoGenerateColumns="False">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Child Number" Binding="{Binding CNumber}"/>
-                            <DataGridTextColumn Header="EXP" Binding="{Binding cn_exp}"/>
-                            <DataGridTextColumn Header="Diffrence" Binding="{Binding diff}"/>
-                            <DataGridTextColumn Header="Logic Desc" Binding="{Binding child_logic_desc}"/>
-                            <DataGridTextColumn Header="Address" Binding="{Binding child_m_addr_a}"/>
-                            <DataGridTextColumn Header="CN Create Date" Binding="{Binding child_create_date}"/>
-                            <DataGridTextColumn Header="Mother Number" Binding="{Binding MNumber}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Large Numbers">
-                <Grid Background="#FFFFFFFF">
-                    <DataGrid HorizontalAlignment="Left" Height="402" VerticalAlignment="Top" Width="694" x:Name="dg_cn_Large" AutoGenerateColumns="False">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Child Number" Binding="{Binding CNumber}"/>
-                            <DataGridTextColumn Header="EXP" Binding="{Binding cn_exp}"/>
-                            <DataGridTextColumn Header="Logic Desc" Binding="{Binding child_logic_desc}"/>
-                            <DataGridTextColumn Header="Address" Binding="{Binding child_m_addr_a}"/>
-                            <DataGridTextColumn Header="CN Create Date" Binding="{Binding child_create_date}"/>
-                            <DataGridTextColumn Header="Mother Number" Binding="{Binding MNumber}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
-            </TabItem>
-        </TabControl>
-        <Image HorizontalAlignment="Left" Height="150" Margin="50,535,0,0" VerticalAlignment="Top" Width="700" Name="img_src"/>
-    </Grid>
+        Title="CNSearchWindow" Width="1063" Height="1000" 
+        Closed="Window_Closed" HorizontalAlignment="Left" VerticalAlignment="Top" Top="0" Left="0">
+    <Viewbox HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Grid>
+            <TextBox Name="searchText" HorizontalAlignment="Left" Height="30" Margin="50,50,50,50" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" FontSize="16" KeyDown="SearchText_OnKeyDown"/>
+            <Button Content="검색" HorizontalAlignment="Left" Height="30" Margin="375,50,50,50" VerticalAlignment="Top" Width="100" Click="Search_Click" />
+                <Button Content="지우기" HorizontalAlignment="Left" Height="30" Margin="500,50,50,50" VerticalAlignment="Top" Width="100" Click="Delete_Click"/>
+            <RadioButton GroupName="column" Name="cn_sign" Content="Sign" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,30,50,50" IsChecked="True"/>
+            <RadioButton GroupName="column" Name="cn_sign_exp" Content="Sign + EXP" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="150,30,50,50"/>
+                <TabControl HorizontalAlignment="Left" Width="700" Height="430" Margin="50,100,50,50" VerticalAlignment="Top" >
+                <TabItem Header="Equal Number">
+                    <Grid Background="#FFFFFFFF">
+                        <DataGrid HorizontalAlignment="Left" Height="402" VerticalAlignment="Top" Width="694" x:Name="dg_cn_equal" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dg_SelectionChanged">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Child Number" Binding="{Binding CNumber}"/>
+                                <DataGridTextColumn Header="Logic Desc" Binding="{Binding child_logic_desc}"/>
+                                <DataGridTextColumn Header="Address" Binding="{Binding child_m_addr_a}"/>
+                                <DataGridTextColumn Header="CN Create Date" Binding="{Binding child_create_date}"/>
+                                <DataGridTextColumn Header="Mother Number" Binding="{Binding MNumber}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Total Breifing">
+                    <Grid Background="#FFFFFFFF">
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Small Numbers">
+                    <Grid Background="#FFFFFFFF">
+                        <DataGrid HorizontalAlignment="Left" Height="402" VerticalAlignment="Top" Width="694" x:Name="dg_cn_small" AutoGenerateColumns="False" SelectionChanged="dg_SelectionChanged">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Child Number" Binding="{Binding CNumber}"/>
+                                <DataGridTextColumn Header="Diffrence" Binding="{Binding diff}"/>
+                                <DataGridTextColumn Header="Logic Desc" Binding="{Binding child_logic_desc}"/>
+                                <DataGridTextColumn Header="Address" Binding="{Binding child_m_addr_a}"/>
+                                <DataGridTextColumn Header="CN Create Date" Binding="{Binding child_create_date}"/>
+                                <DataGridTextColumn Header="Mother Number" Binding="{Binding MNumber}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Large Numbers">
+                    <Grid Background="#FFFFFFFF">
+                        <DataGrid HorizontalAlignment="Left" Height="402" VerticalAlignment="Top" Width="694" x:Name="dg_cn_Large" AutoGenerateColumns="False" SelectionChanged="dg_SelectionChanged">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Child Number" Binding="{Binding CNumber}"/>
+                                <DataGridTextColumn Header="Logic Desc" Binding="{Binding child_logic_desc}"/>
+                                <DataGridTextColumn Header="Address" Binding="{Binding child_m_addr_a}"/>
+                                <DataGridTextColumn Header="CN Create Date" Binding="{Binding child_create_date}"/>
+                                <DataGridTextColumn Header="Mother Number" Binding="{Binding MNumber}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+                <Image Height="150" Margin="50,535,50,50" HorizontalAlignment="Left" VerticalAlignment="Top" Width="700" Name="img_src"/>
+        </Grid>
+    </Viewbox>
 </Window>

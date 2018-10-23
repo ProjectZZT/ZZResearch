@@ -6,6 +6,8 @@ using System.Data.SqlClient;
 using System;
 using System.Windows.Input;
 using System.Globalization;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace ZZResearch
 {
@@ -14,13 +16,33 @@ namespace ZZResearch
     /// </summary>
     public partial class MNSearchWindow : Window
     {
-        public MNSearchWindow()
+        static MNSearchWindow instance = null;
+        static readonly object padlock = new object();
+
+        public static MNSearchWindow Instance
         {
-            InitializeComponent();
+            get
+            {
+                lock(padlock)
+                {
+                    if (instance == null)
+                    {
+                        instance = new MNSearchWindow();
+                    }
+                    return instance;
+                }
+            }
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        public MNSearchWindow()
         {
+            instance = this;
+            InitializeComponent();
+        }
+        
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            instance = null;
         }
 
         private void FillDataGrid()
@@ -31,7 +53,12 @@ namespace ZZResearch
             {
                 try
                 {
-                    if (mn_sign.IsChecked == true)
+                    if (m_addr_a.IsChecked == true)
+                    {   //  주소 검색
+                        string tmpstr = searchText.Text;
+                        CmdString = "SELECT MNumber = (mn_sign + (case when mn_exp < 0 then 'E' else 'E+' end) + cast(mn_exp as char(12))), mn_exp, m_addr_a, mother_create_date FROM mothertbl where m_addr_a like '%" + tmpstr + "%'";
+                    }
+                    else
                     {   //  숫자 검색
                         //  파싱을 통해 문법 준수 여부 체크
                         string sign = searchText.Text.Trim();
@@ -83,13 +110,8 @@ namespace ZZResearch
                         }
                         sign = bf.ToString();
                         string msgstr = sign + (exp > 0 ? "E+" : "E") + exp;
-                        MessageBox.Show(msgstr + " / " + sign + " / " + exp, "~");
-                        CmdString = "SELECT MNumber = (mn_sign + (case when mn_exp < 0 then 'E' else 'E+' end) + cast(mn_exp as char(12))) , mn_exp, m_addr_a, mother_create_date FROM mothertbl where mn_sign = '" + sign + "'";
-                    }
-                    else if (m_addr_a.IsChecked == true)
-                    {   //  주소 검색
-                        string tmpstr = searchText.Text;
-                        CmdString = "SELECT MNumber = (mn_sign + (case when mn_exp < 0 then 'E' else 'E+' end) + cast(mn_exp as char(12))), mn_exp, m_addr_a, mother_create_date FROM mothertbl where m_addr_a like '%" + tmpstr + "%'";
+                        CmdString = "SELECT MNumber = (mn_sign + (case when mn_exp < 0 then 'E' else 'E+' end) + cast(mn_exp as char(12))) , mn_exp, m_addr_a, mother_create_date FROM mothertbl where mn_sign = '"
+                            + sign + ((mn_sign.IsChecked == true) ? "'" : "' and mn_exp = " + exp );
                     }
                     SqlCommand cmd = new SqlCommand(CmdString, con);
                     SqlDataAdapter sda = new SqlDataAdapter(cmd);
@@ -98,9 +120,11 @@ namespace ZZResearch
                     if (dt.Rows.Count == 0)
                     {
                         MessageBox.Show("결과가 없습니다.", "알림");
+                        datagrid1.ItemsSource = null;
                     }
                     else
                     {
+                        dt.DefaultView.Sort = "mother_create_date desc";
                         datagrid1.ItemsSource = dt.DefaultView;
                     }
                 } catch (Exception e)
@@ -126,5 +150,19 @@ namespace ZZResearch
             }
         }
 
+        private void dg_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            DataRowView drv = (DataRowView)((DataGrid)sender).SelectedItem;
+            if (drv != null)
+            {
+                string tmpaddr = "http://192.168.0.12:8000/zerozone/images/math/" + drv["m_addr_a"].ToString() + ".gif";
+                BitmapImage bi = new BitmapImage(new Uri(tmpaddr));
+                img_src.Source = bi;
+            }
+            else
+            {
+                img_src.Source = null;
+            }
+        }
     }
 }

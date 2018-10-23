@@ -5,61 +5,63 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZZResearch"
         mc:Ignorable="d"
-        Title="Fraction Number Search" Height="580" Width="800">
-    <Grid>
-        <TextBox Name="searchText" HorizontalAlignment="Left" Height="30" Margin="50,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" FontSize="16" KeyDown="SearchText_OnKeyDown"/>
-        <Button Content="검색" HorizontalAlignment="Left" Height="30" Margin="375,50,0,0" VerticalAlignment="Top" Width="100" Click="Search_Click" />
-        <Button Content="지우기" HorizontalAlignment="Left" Height="30" Margin="500,50,0,0" VerticalAlignment="Top" Width="100" Click="Delete_Click"/>
-        <TabControl HorizontalAlignment="Left" Width="700" Height="410" Margin="50,100,0,0" VerticalAlignment="Top" >
-            <TabItem Header="Equal Number">
-                <Grid Background="#FFFFFFFF">
-                    <DataGrid HorizontalAlignment="Left" Height="332" VerticalAlignment="Top" Width="694" x:Name="dg_fn_equal" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,50,0,0">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Fraction Code" Binding="{Binding f_opcode}"/>
-                            <DataGridTextColumn Header="Fraction Number" Binding="{Binding FNumber}"/>
-                            <DataGridTextColumn Header="EXP" Binding="{Binding fn_exp}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <TextBox x:Name="txtQuery_E" HorizontalAlignment="Left" Height="30" Margin="70,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="16" IsReadOnly="True"/>
-                    <TextBlock HorizontalAlignment="Left" FontSize="16" Margin="20,15,0,0" TextWrapping="Wrap" Text="Query" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtDiff_E" HorizontalAlignment="Left" Height="30" Margin="234,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" FontSize="16" IsReadOnly="True"/>
-                    <TextBlock HorizontalAlignment="Left" FontSize="16" Margin="160,15,0,0" TextWrapping="Wrap" Text="Diffrence" VerticalAlignment="Top"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Small Numbers">
-                <Grid Background="#FFFFFFFF">
-                    <DataGrid HorizontalAlignment="Left" Height="332" Margin="0,50,0,0" VerticalAlignment="Top" Width="694" x:Name="dg_fn_small" AutoGenerateColumns="False">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Fraction Code" Binding="{Binding f_opcode}"/>
-                            <DataGridTextColumn Header="Fraction Number" Binding="{Binding FNumber}"/>
-                            <DataGridTextColumn Header="EXP" Binding="{Binding fn_exp}"/>
-                            <DataGridTextColumn Header="Diffrence" Binding="{Binding diff}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <TextBox x:Name="txtQuery_S" HorizontalAlignment="Left" Height="30" Margin="70,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="16" IsReadOnly="True"/>
-                    <TextBlock HorizontalAlignment="Left" FontSize="16" Margin="20,15,0,0" TextWrapping="Wrap" Text="Query" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtDiff_S" HorizontalAlignment="Left" Height="30" Margin="234,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" FontSize="16" IsReadOnly="True"/>
-                    <TextBlock HorizontalAlignment="Left" FontSize="16" Margin="160,15,0,0" TextWrapping="Wrap" Text="Diffrence" VerticalAlignment="Top"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Large Numbers">
-                <Grid Background="#FFFFFFFF">
-                    <DataGrid HorizontalAlignment="Left" Height="332" Margin="0,50,0,0" VerticalAlignment="Top" Width="694" x:Name="dg_fn_large" AutoGenerateColumns="False">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Fraction Number" Binding="{Binding FNumber}"/>
-                            <DataGridTextColumn Header="EXP" Binding="{Binding fn_exp}"/>
-                            <DataGridTextColumn Header="Diffrence" Binding="{Binding diff}"/>
-                            <DataGridTextColumn Header="Fraction Code" Binding="{Binding f_opcode}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <TextBox x:Name="txtQuery_L" HorizontalAlignment="Left" Height="30" Margin="70,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="16" IsReadOnly="True"/>
-                    <TextBlock HorizontalAlignment="Left" FontSize="16" Margin="20,15,0,0" TextWrapping="Wrap" Text="Query" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtDiff_L" HorizontalAlignment="Left" Height="30" Margin="234,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" FontSize="16" IsReadOnly="True"/>
-                    <TextBlock HorizontalAlignment="Left" FontSize="16" Margin="160,15,0,0" TextWrapping="Wrap" Text="Diffrence" VerticalAlignment="Top"/>
-                </Grid>
-            </TabItem>
-        </TabControl>
-        <RadioButton GroupName="column" Name="radio_sign" Content="Sign" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,30,0,0" IsChecked="True"/>
-        <RadioButton GroupName="column" Name="radio_fraction" Content="Fraction" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="150,30,0,0"/>
-    </Grid>
+        Title="Fraction Number Search" Width="1400" Height="1000">
+    <Viewbox HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Grid>
+            <TextBox Name="searchText" HorizontalAlignment="Left" Height="30" Margin="50,50,50,50" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" FontSize="16" KeyDown="SearchText_OnKeyDown"/>
+            <Button Content="검색" HorizontalAlignment="Left" Height="30" Margin="375,50,50,50" VerticalAlignment="Top" Width="100" Click="Search_Click" />
+            <Button Content="지우기" HorizontalAlignment="Left" Height="30" Margin="500,50,50,50" VerticalAlignment="Top" Width="100" Click="Delete_Click"/>
+            <TabControl HorizontalAlignment="Left" Width="700" Height="410" Margin="50,100,50,50" VerticalAlignment="Top" >
+                <TabItem Header="Equal Number">
+                    <Grid Background="#FFFFFFFF">
+                        <DataGrid HorizontalAlignment="Left" Height="332" VerticalAlignment="Top" Width="694" x:Name="dg_fn_equal" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,50,0,0">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Fraction Code" Binding="{Binding f_opcode}"/>
+                                <DataGridTextColumn Header="Fraction Number" Binding="{Binding FNumber}"/>
+                                <DataGridTextColumn Header="EXP" Binding="{Binding fn_exp}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TextBox x:Name="txtQuery_E" HorizontalAlignment="Left" Height="30" Margin="70,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="16" IsReadOnly="True"/>
+                        <TextBlock HorizontalAlignment="Left" FontSize="16" Margin="20,15,0,0" TextWrapping="Wrap" Text="Query" VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtDiff_E" HorizontalAlignment="Left" Height="30" Margin="234,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" FontSize="16" IsReadOnly="True"/>
+                        <TextBlock HorizontalAlignment="Left" FontSize="16" Margin="160,15,0,0" TextWrapping="Wrap" Text="Diffrence" VerticalAlignment="Top"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Small Numbers">
+                    <Grid Background="#FFFFFFFF">
+                        <DataGrid HorizontalAlignment="Left" Height="332" Margin="0,50,0,0" VerticalAlignment="Top" Width="694" x:Name="dg_fn_small" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Fraction Code" Binding="{Binding f_opcode}"/>
+                                <DataGridTextColumn Header="Fraction Number" Binding="{Binding FNumber}"/>
+                                <DataGridTextColumn Header="EXP" Binding="{Binding fn_exp}"/>
+                                <DataGridTextColumn Header="Diffrence" Binding="{Binding diff}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TextBox x:Name="txtQuery_S" HorizontalAlignment="Left" Height="30" Margin="70,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="16" IsReadOnly="True"/>
+                        <TextBlock HorizontalAlignment="Left" FontSize="16" Margin="20,15,0,0" TextWrapping="Wrap" Text="Query" VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtDiff_S" HorizontalAlignment="Left" Height="30" Margin="234,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" FontSize="16" IsReadOnly="True"/>
+                        <TextBlock HorizontalAlignment="Left" FontSize="16" Margin="160,15,0,0" TextWrapping="Wrap" Text="Diffrence" VerticalAlignment="Top"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Large Numbers">
+                    <Grid Background="#FFFFFFFF">
+                        <DataGrid HorizontalAlignment="Left" Height="332" Margin="0,50,0,0" VerticalAlignment="Top" Width="694" x:Name="dg_fn_large" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Fraction Number" Binding="{Binding FNumber}"/>
+                                <DataGridTextColumn Header="EXP" Binding="{Binding fn_exp}"/>
+                                <DataGridTextColumn Header="Diffrence" Binding="{Binding diff}"/>
+                                <DataGridTextColumn Header="Fraction Code" Binding="{Binding f_opcode}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TextBox x:Name="txtQuery_L" HorizontalAlignment="Left" Height="30" Margin="70,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="16" IsReadOnly="True"/>
+                        <TextBlock HorizontalAlignment="Left" FontSize="16" Margin="20,15,0,0" TextWrapping="Wrap" Text="Query" VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtDiff_L" HorizontalAlignment="Left" Height="30" Margin="234,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" FontSize="16" IsReadOnly="True"/>
+                        <TextBlock HorizontalAlignment="Left" FontSize="16" Margin="160,15,0,0" TextWrapping="Wrap" Text="Diffrence" VerticalAlignment="Top"/>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+            <RadioButton GroupName="column" Name="radio_sign" Content="Sign" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,30,50,50" IsChecked="True"/>
+            <RadioButton GroupName="column" Name="radio_fraction" Content="Fraction" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="150,30,50,50"/>
+        </Grid>
+    </Viewbox>
 </Window>

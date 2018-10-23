@@ -38,14 +38,12 @@ namespace ZZResearch
 
         private void SearchMN_Click(object sender, RoutedEventArgs e)
         {
-            Window win2 = new MNSearchWindow();
-            win2.ShowDialog();
         }
 
         private void SearchCN_Click(object sender, RoutedEventArgs e)
         {
-            Window win2 = new CNSearchWindow();
-            win2.ShowDialog();
+            CNSearchWindow.Instance.Show();
+            CNSearchWindow.Instance.Focus();
         }
 
         private void SearchPN_Click(object sender, RoutedEventArgs e)
@@ -75,6 +73,25 @@ namespace ZZResearch
         public static string GetString()
         {
             return "Data Source=192.168.0.12; Initial Catalog=zerodb; User ID=zzuser; Password=zzt*0702;";
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var response = MessageBox.Show("정말로 종료하시겠습니까?", "Exit",
+                                           MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+            if (response == MessageBoxResult.No)
+            {
+                e.Cancel = true;
+            }
+            else
+            {
+                Application.Current.Shutdown();
+            }
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

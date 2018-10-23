@@ -15,15 +15,35 @@ namespace ZZResearch
     /// </summary>
     public partial class CNSearchWindow : Window
     {
+        static CNSearchWindow instance = null;
+        static readonly object padlock = new object();
+
+        public static CNSearchWindow Instance
+        {
+            get
+            {
+                lock (padlock)
+                {
+                    if (instance == null)
+                    {
+                        instance = new CNSearchWindow();
+                    }
+                    return instance;
+                }
+            }
+        }
+
         public CNSearchWindow()
         {
+            instance = this;
             InitializeComponent();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Closed(object sender, EventArgs e)
         {
-
+            instance = null;
         }
+        
 
         private void FillDataGrid()
         {
@@ -76,7 +96,8 @@ namespace ZZResearch
                     }
                     sign = bf.ToString();
                     string msgstr = sign + (exp > 0 ? "E+" : "E") + exp;
-                    CmdString = "SELECT CNumber = (cn_sign + (case when cn_exp < 0 then 'E' else 'E+' end) + cast(cn_exp as char(12))), child_logic_desc, child_create_date, child_mn_sign as MNumber, child_mn_exp, child_m_addr_a FROM childtbl where cn_sign = '" + sign + "'";
+                    CmdString = "SELECT CNumber = (cn_sign + (case when cn_exp < 0 then 'E' else 'E+' end) + cast(cn_exp as char(12))), child_logic_desc, child_create_date, child_mn_sign as MNumber, child_mn_exp, child_m_addr_a FROM childtbl where cn_sign = '"
+                        + sign + ((cn_sign.IsChecked == true) ? "'" : "' and cn_exp = " + exp);
 
                     // Equal Number
                     SqlCommand cmd = new SqlCommand(CmdString, con);
@@ -86,19 +107,23 @@ namespace ZZResearch
                     dg_cn_equal.ItemsSource = dt.DefaultView;
 
                     //  Small Number
-                    CmdString = "SELECT top 20 CNumber = (cn_sign + (case when cn_exp < 0 then 'E' else 'E+' end) + cast(cn_exp as char(12))), cn_exp, cn_sign as diff, child_logic_desc, child_create_date, (child_mn_sign + 'E+' + cast(child_mn_exp as char(12))) as MNumber, child_m_addr_a FROM childtbl where cn_sign < '" + sign + "'";
+                    CmdString = "SELECT top 20 CNumber = (cn_sign + (case when cn_exp < 0 then 'E' else 'E+' end) + cast(cn_exp as char(12))), cn_sign as diff, child_logic_desc, child_create_date, (child_mn_sign + 'E+' + cast(child_mn_exp as char(12))) as MNumber, child_m_addr_a FROM childtbl where cn_sign < '"
+                        + sign + ((cn_sign.IsChecked == true) ? "'" : "' and cn_exp = " + exp);
                     cmd = new SqlCommand(CmdString, con);
                     sda = new SqlDataAdapter(cmd);
                     dt = new DataTable("ChildNumbers_S");
                     sda.Fill(dt);
+                    dt.DefaultView.Sort = "diff asc";
                     dg_cn_small.ItemsSource = dt.DefaultView;
 
                     //  Large Number
-                    CmdString = "SELECT top 20 CNumber = (cn_sign + (case when cn_exp < 0 then 'E' else 'E+' end) + cast(cn_exp as char(12))), cn_exp, cn_sign as diff, child_logic_desc, child_create_date, (child_mn_sign + 'E+' + cast(child_mn_exp as char(12))) as MNumber, child_m_addr_a FROM childtbl where cn_sign > '" + sign + "'";
+                    CmdString = "SELECT top 20 CNumber = (cn_sign + (case when cn_exp < 0 then 'E' else 'E+' end) + cast(cn_exp as char(12))), cn_sign as diff, child_logic_desc, child_create_date, (child_mn_sign + 'E+' + cast(child_mn_exp as char(12))) as MNumber, child_m_addr_a FROM childtbl where cn_sign > '"
+                        + sign + ((cn_sign.IsChecked == true) ? "'" : "' and cn_exp = " + exp);
                     cmd = new SqlCommand(CmdString, con);
                     sda = new SqlDataAdapter(cmd);
                     dt = new DataTable("ChildNumbers_L");
                     sda.Fill(dt);
+                    dt.DefaultView.Sort = "diff asc";
                     dg_cn_Large.ItemsSource = dt.DefaultView;
                 }
                 catch (Exception)
@@ -127,9 +152,17 @@ namespace ZZResearch
         private void dg_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             DataRowView drv = (DataRowView)((DataGrid)sender).SelectedItem;
-            string tmpaddr = "http://192.168.0.12:8000/zerozone/images/math/" + drv["child_m_addr_a"].ToString() + ".gif";
-            BitmapImage bi = new BitmapImage(new Uri(tmpaddr));
-            img_src.Source = bi;
+            if (drv != null)
+            {
+                string tmpaddr = "http://192.168.0.12:8000/zerozone/images/math/" + drv["child_m_addr_a"].ToString() + ".gif";
+                BitmapImage bi = new BitmapImage(new Uri(tmpaddr));
+                img_src.Source = bi;
+            }
+            else
+            {
+                img_src.Source = null;
+            }
         }
+
     }
 }
