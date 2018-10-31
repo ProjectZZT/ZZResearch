@@ -207,7 +207,7 @@ namespace ZZResearch
             return this._bigIntValue == other._bigIntValue
                 && this._decimalCount == other._decimalCount;
         }
-
+        
         #endregion Public Methods
 
         //
@@ -347,6 +347,7 @@ namespace ZZResearch
 
             if (value.Contains(BigDecimal.DecimalSeparator))
                 decimals = value.Length - value.IndexOf(BigDecimal.DecimalSeparator) - 1;
+            
 
             return new BigDecimal(bigInt, decimals);
         }

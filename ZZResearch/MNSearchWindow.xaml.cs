@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Globalization;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using System.Numerics;
 
 namespace ZZResearch
 {
@@ -56,7 +57,7 @@ namespace ZZResearch
                     if (m_addr_a.IsChecked == true)
                     {   //  주소 검색
                         string tmpstr = searchText.Text;
-                        CmdString = "SELECT MNumber = (mn_sign + (case when mn_exp < 0 then 'E' else 'E+' end) + cast(mn_exp as char(12))), mn_exp, m_addr_a, mother_create_date FROM mothertbl where m_addr_a like '%" + tmpstr + "%'";
+                        CmdString = "SELECT MNumber = (mn_sign + (case when mn_exp < 0 then 'E' else 'E+' end) + cast(mn_exp as char(12))), mn_exp, m_addr_a, mother_create_date FROM mothertbl nolock where m_addr_a like '%" + tmpstr + "%'";
                     }
                     else
                     {   //  숫자 검색
@@ -89,7 +90,8 @@ namespace ZZResearch
                         }
                         else
                         {   //  지수와 가수 분리 작업
-                            bf = BigDecimal.Parse(sign);
+                            bf = BigDecimal.Parse(sign.Substring(0, eidx));
+                            exp = int.Parse(sign.Substring(eidx + 1));
                             while (bf > 10 || bf < 1)
                             {
                                 if (bf > 10)
@@ -110,7 +112,7 @@ namespace ZZResearch
                         }
                         sign = bf.ToString();
                         string msgstr = sign + (exp > 0 ? "E+" : "E") + exp;
-                        CmdString = "SELECT MNumber = (mn_sign + (case when mn_exp < 0 then 'E' else 'E+' end) + cast(mn_exp as char(12))) , mn_exp, m_addr_a, mother_create_date FROM mothertbl where mn_sign = '"
+                        CmdString = "SELECT MNumber = (mn_sign + (case when mn_exp < 0 then 'E' else 'E+' end) + cast(mn_exp as char(12))) , mn_exp, m_addr_a, mother_create_date FROM mothertbl nolock where mn_sign = '"
                             + sign + ((mn_sign.IsChecked == true) ? "'" : "' and mn_exp = " + exp );
                     }
                     SqlCommand cmd = new SqlCommand(CmdString, con);

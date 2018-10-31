@@ -30,7 +30,7 @@ namespace ZZResearch
         // Max digits to be shown in the memory label, does not affect the actual number stored in memory
         const int maxMemoryLabelLength = 6;
         // Default font result box font size 
-        const int defaultFontSize = 48;
+        const int defaultFontSize = 20;
 
         // True if there is an on going math operation
         bool operationCheck;
@@ -105,14 +105,14 @@ namespace ZZResearch
                 showError(INVALID_INPUT);
                 return;
             }
-
+            /*
             if (text.Length > 30)
                 return;
             if (text.Length > 12)
                 resultBox.FontSize = 25;
             if (text.Length > 24)
                 resultBox.FontSize = 20;
-
+            */
             clearNext = clear;
             resultBox.Text = text;
         }
@@ -140,9 +140,10 @@ namespace ZZResearch
             // Removes pointless decimals from the numbers in the equation
             equation = Regex.Replace(equation, @"(\d+)\.\s", "$1 ");
 
+            /*
             if (equation.Length > 10)
                 equationBox.FontSize = 18;
-
+            */
             if (!append)
                 equationBox.Text = equation;
             else
@@ -162,10 +163,9 @@ namespace ZZResearch
         /// <summary>
         /// Parses the text in the text box into a double datatype and returns it.
         /// </summary>
-        private double getNumber()
+        private BigDecimal getNumber()
         {
-            double number = double.Parse(resultBox.Text);
-            return number;
+            return BigDecimal.Parse(resultBox.Text);
         }
 
         /// <summary>
@@ -325,14 +325,14 @@ namespace ZZResearch
 
             Button button = (Button)sender;
             string buttonText = button.Content.ToString();
-            double number = getNumber();
+            BigDecimal number = getNumber();
             string equation = "";
             string result = "";
 
             switch (buttonText)
             {
                 // C# doesn't have a Math.factorial()? Who the fuck does that?!
-                case "!":
+                case "n!":
                     if (number < 0 || number.ToString().Contains("."))
                     {
                         showError(INVALID_INPUT);
@@ -360,22 +360,54 @@ namespace ZZResearch
 
                 case "ln":
                     equation = "ln(" + number + ")";
-                    result = Math.Log(number).ToString();
+                    result = ((BigDecimal)Math.Log((double)number)).ToString();
                     break;
 
                 case "log":
                     equation = "log(" + number + ")";
-                    result = Math.Log10(number).ToString();
+                    result = Math.Log10((double)number).ToString();
                     break;
 
                 case "√":
                     equation = "√(" + number + ")";
-                    result = Math.Sqrt(number).ToString();
+                    result = Math.Sqrt((double)number).ToString();
                     break;
 
-                case "-n":
+                case "+/-":
                     equation = "negate(" + number + ")";
-                    result = decimal.Negate((decimal)number).ToString();
+                    result = BigDecimal.Negate(number).ToString();
+                    break;
+
+                case "F-E":
+                    int eidx = resultBox.Text.IndexOf('E');
+                    if (eidx != -1)
+                    {
+                        BigDecimal bf = number;
+                        int exp = 0;
+                        while (bf > 10 || bf < 1)
+                        {
+                            if (bf > 10)
+                            {
+                                bf /= 10;
+                                ++exp;
+                            }
+                            else if (bf < 1)
+                            {
+                                bf *= 10;
+                                --exp;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        result = bf + (exp > 0 ? "E+" : "E") + exp;
+                    }
+                    else
+                    {
+
+                    }
+                    equation = "F-E(" + number + ")";
                     break;
             }
 
@@ -401,13 +433,14 @@ namespace ZZResearch
             string buttonText = button.Content.ToString();
             string equation = "";
             string result = "";
-            double number = getNumber();
+            BigDecimal number = getNumber();
+
 
             switch (currentTrigMode)
             {
                 // Standard trig functions
                 case trigModes.STANDARD:
-                    double radianAngle = Angles.Converter.radians(number, angleUnit);
+                    double radianAngle = Angles.Converter.radians((double)number, angleUnit);
                     switch (buttonText)
                     {
                         case "sin":
@@ -426,24 +459,24 @@ namespace ZZResearch
                             break;
                     }
                     break;
-
+                    
                 // Hyperbolic trig functions
                 case trigModes.HYPERBOLIC:
                     switch (buttonText)
                     {
                         case "sinh":
                             equation = "sinh(" + number + ")";
-                            result = Math.Sinh(number).ToString();
+                            result = Math.Sinh((double)number).ToString();
                             break;
 
                         case "cosh":
                             equation = "cosh(" + number + ")";
-                            result = Math.Cosh(number).ToString();
+                            result = Math.Cosh((double)number).ToString();
                             break;
 
                         case "tanh":
                             equation = "tanh(" + number + ")";
-                            result = Math.Tanh(number).ToString();
+                            result = Math.Tanh((double)number).ToString();
                             break;
                     }
                     break;
@@ -454,17 +487,17 @@ namespace ZZResearch
                     {
                         case "asin":
                             equation = "asin(" + number + ")";
-                            result = Math.Asin(number).ToString();
+                            result = Math.Asin((double)number).ToString();
                             break;
 
                         case "acos":
                             equation = "acos(" + number + ")";
-                            result = Math.Acos(number).ToString();
+                            result = Math.Acos((double)number).ToString();
                             break;
 
                         case "atan":
                             equation = "atan(" + number + ")";
-                            result = Math.Atan(number).ToString();
+                            result = Math.Atan((double)number).ToString();
                             break;
                     }
                     break;
@@ -527,7 +560,7 @@ namespace ZZResearch
                 case "+":
                     currentOperation = operations.ADDITION;
                     break;
-                case "^":
+                case "x^y":
                     currentOperation = operations.POWER;
                     break;
             }
@@ -570,7 +603,7 @@ namespace ZZResearch
         {
             if (errors.Contains(resultBox.Text))
                 return;
-            memory += getNumber();
+            memory += (double)getNumber();
             updateMemoryLabel();
         }
 
@@ -578,7 +611,7 @@ namespace ZZResearch
         {
             if (errors.Contains(resultBox.Text))
                 return;
-            memory -= getNumber();
+            memory -= (double)getNumber();
             updateMemoryLabel();
         }
 

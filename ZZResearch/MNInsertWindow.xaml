@@ -5,16 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZZResearch"
         mc:Ignorable="d"
-        Title="Insert Monther Number - One" Height="520" Width="660">
+        Title="Insert Monther Number - One" Height="692.36" Width="660">
     <Grid>
         <GroupBox Header="Mother Number" HorizontalAlignment="Left" Height="60" VerticalAlignment="Top" Width="280" Margin="40,30,0,0"/>
-        <TextBox Name="text_mn" HorizontalAlignment="Left" Height="30" Margin="50,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="260" FontSize="16" KeyDown="SearchText_OnKeyDown"/>
+        <TextBox Name="text_mn" HorizontalAlignment="Left" Height="30" Margin="50,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="260" FontSize="16"/>
         <GroupBox Header="Address" HorizontalAlignment="Left" Height="60" VerticalAlignment="Top" Width="280" Margin="330,30,0,0"/>
-        <TextBox Name="text_addr" HorizontalAlignment="Left" Height="30" Margin="340,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="260" FontSize="16" KeyDown="SearchText_OnKeyDown"/>
-        <GroupBox Header="Image File" HorizontalAlignment="Left" Height="60" VerticalAlignment="Top" Width="280" Margin="40,101,0,0"/>
-        <TextBox Name="text_file" HorizontalAlignment="Left" Height="30" Margin="50,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="260" FontSize="12"/>
-        <Button Content="저장" HorizontalAlignment="Left" Height="30" Margin="340,120,0,0" VerticalAlignment="Top" Width="100" Click="Search_Click" />
-        <Button Content="지우기" HorizontalAlignment="Left" Height="30" Margin="500,120,0,0" VerticalAlignment="Top" Width="100" Click="Delete_Click"/>
+        <TextBox Name="text_addr" HorizontalAlignment="Left" Height="30" Margin="340,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="260" FontSize="16" IsReadOnly="True"/>
+        <GroupBox Header="Image File" HorizontalAlignment="Left" Height="60" VerticalAlignment="Top" Width="350" Margin="40,101,0,0"/>
+        <TextBox Name="text_file" HorizontalAlignment="Left" Height="30" Margin="50,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" FontSize="16" IsReadOnly="True"/>
+        <Button Content="저장" HorizontalAlignment="Left" Height="30" Margin="400,120,0,0" VerticalAlignment="Top" Width="100" Click="Upload_Click" />
+        <Button Content="지우기" HorizontalAlignment="Left" Height="30" Margin="510,120,0,0" VerticalAlignment="Top" Width="100" Click="Delete_Click"/>
         <GroupBox Header="Inserted Data" HorizontalAlignment="Left" Height="294" VerticalAlignment="Top" Width="570" Margin="40,170,0,0"/>
         <DataGrid HorizontalAlignment="Left" Height="258" Margin="50,192,0,0" VerticalAlignment="Top" Width="550" Name="datagrid1" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
@@ -25,5 +25,7 @@
                 <DataGridTextColumn Header="Create Date" Binding="{Binding mother_create_date}"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Button Content="찾아보기" HorizontalAlignment="Left" Height="30" Margin="280,120,0,0" VerticalAlignment="Top" Width="100" Click="SearchImageFile" />
+        <Image Height="150" Margin="50,470,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="550" x:Name="img_src"/>
     </Grid>
 </Window>

@@ -31,13 +31,10 @@ namespace ZZResearch
             win2.ShowDialog();
         }
 
-        private void CreateMN_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void SearchMN_Click(object sender, RoutedEventArgs e)
         {
+            MNSearchWindow.Instance.Show();
+            MNSearchWindow.Instance.Focus();
         }
 
         private void SearchCN_Click(object sender, RoutedEventArgs e)

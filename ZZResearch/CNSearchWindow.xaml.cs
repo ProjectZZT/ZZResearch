@@ -96,7 +96,7 @@ namespace ZZResearch
                     }
                     sign = bf.ToString();
                     string msgstr = sign + (exp > 0 ? "E+" : "E") + exp;
-                    CmdString = "SELECT CNumber = (cn_sign + (case when cn_exp < 0 then 'E' else 'E+' end) + cast(cn_exp as char(12))), child_logic_desc, child_create_date, child_mn_sign as MNumber, child_mn_exp, child_m_addr_a FROM childtbl where cn_sign = '"
+                    CmdString = "SELECT CNumber = (cn_sign + (case when cn_exp < 0 then 'E' else 'E+' end) + cast(cn_exp as char(12))), child_logic_desc, child_create_date, child_mn_sign as MNumber, child_mn_exp, child_m_addr_a FROM childtbl nolock where cn_sign = '"
                         + sign + ((cn_sign.IsChecked == true) ? "'" : "' and cn_exp = " + exp);
 
                     // Equal Number
@@ -107,8 +107,8 @@ namespace ZZResearch
                     dg_cn_equal.ItemsSource = dt.DefaultView;
 
                     //  Small Number
-                    CmdString = "SELECT top 20 CNumber = (cn_sign + (case when cn_exp < 0 then 'E' else 'E+' end) + cast(cn_exp as char(12))), cn_sign as diff, child_logic_desc, child_create_date, (child_mn_sign + 'E+' + cast(child_mn_exp as char(12))) as MNumber, child_m_addr_a FROM childtbl where cn_sign < '"
-                        + sign + ((cn_sign.IsChecked == true) ? "'" : "' and cn_exp = " + exp);
+                    CmdString = "SELECT top 20 CNumber = (cn_sign + (case when cn_exp < 0 then 'E' else 'E+' end) + cast(cn_exp as char(12))), cn_sign as diff, child_logic_desc, child_create_date, (child_mn_sign + 'E+' + cast(child_mn_exp as char(12))) as MNumber, child_m_addr_a FROM childtbl nolock where cn_sign < '"
+                        + sign + ((cn_sign.IsChecked == true) ? "'" : "' and cn_exp <= " + exp);
                     cmd = new SqlCommand(CmdString, con);
                     sda = new SqlDataAdapter(cmd);
                     dt = new DataTable("ChildNumbers_S");
@@ -117,8 +117,8 @@ namespace ZZResearch
                     dg_cn_small.ItemsSource = dt.DefaultView;
 
                     //  Large Number
-                    CmdString = "SELECT top 20 CNumber = (cn_sign + (case when cn_exp < 0 then 'E' else 'E+' end) + cast(cn_exp as char(12))), cn_sign as diff, child_logic_desc, child_create_date, (child_mn_sign + 'E+' + cast(child_mn_exp as char(12))) as MNumber, child_m_addr_a FROM childtbl where cn_sign > '"
-                        + sign + ((cn_sign.IsChecked == true) ? "'" : "' and cn_exp = " + exp);
+                    CmdString = "SELECT top 20 CNumber = (cn_sign + (case when cn_exp < 0 then 'E' else 'E+' end) + cast(cn_exp as char(12))), cn_sign as diff, child_logic_desc, child_create_date, (child_mn_sign + 'E+' + cast(child_mn_exp as char(12))) as MNumber, child_m_addr_a FROM childtbl nolock where cn_sign > '"
+                        + sign + ((cn_sign.IsChecked == true) ? "'" : "' and cn_exp >= " + exp);
                     cmd = new SqlCommand(CmdString, con);
                     sda = new SqlDataAdapter(cmd);
                     dt = new DataTable("ChildNumbers_L");
